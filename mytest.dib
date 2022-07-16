@@ -1,0 +1,36 @@
+#!markdown
+
+# How to run your DLL in a notebook
+
+Create a new dll or executable. 
+Add the public classes/methods you want to use. 
+The build it from within the notebook(see next cell) by calling `dotnet build` for it.
+In this example I also display the output of the build process(makes error detection that much easier).
+
+#!csharp
+
+using System.Diagnostics;
+ProcessStartInfo startInfo = new ProcessStartInfo() { 
+    FileName = "dotnet", 
+    Arguments = "build AddExec",
+    UseShellExecute = false,
+    RedirectStandardOutput = true,
+    CreateNoWindow = true 
+}; 
+var builder = new Process(){StartInfo = startInfo};
+builder.Start();
+builder.WaitForExit();
+builder.StandardOutput.ReadToEnd()
+
+#!csharp
+
+#r "AddExec/bin/Debug/net6.0/AddExec.dll"
+
+#!csharp
+
+var t = new adder.Adder();
+t.add(3,5)
+
+#!csharp
+
+t.add(1,2,4)
